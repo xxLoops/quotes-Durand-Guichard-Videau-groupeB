@@ -2,6 +2,18 @@
  #include <time.h>
 
  int main() {
+     int choix;
+     printf("1. Supprimer une quote\n2. Ajouter une quote\n3. Afficher toutes les quotes");
+     scanf("%d", &choix);
+     if (choix == 1) {
+
+     }
+     else if (choix == 2) {
+
+     }
+     else if (choix == 3) {
+
+     }
      char * quotes[MAX_QUOTES] = {
          "Programmer - An organism that turns caffeine into code",
          "Why do programmers prefer dark mode? Because light attracts bugs.",
