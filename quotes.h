@@ -1,14 +1,17 @@
-// quotes.h
- #ifndef QUOTES_H
- #define QUOTES_H
+#ifndef QUOTES_H
+#define QUOTES_H
 
- #include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
+typedef struct {
+    char **quotes;
+    int size;
+    int capacity;
+} QuotesList;
 
- #define MAX_QUOTES 10
+void init_quotes(QuotesList *list);
+void load_quotes_from_file(QuotesList *list, const char *filename);
+void add_quote(QuotesList *list, const char *quote);
+void remove_quote(QuotesList *list, int index);
+void display_quotes(const QuotesList *list);
+void free_quotes(QuotesList *list);
 
- void print_quote(char ** quotes, int index);
- void print_random_quote(char ** quotes);
-
- #endif
+#endif

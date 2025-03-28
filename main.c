@@ -1,33 +1,52 @@
- #include "quotes.h"
- #include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "quotes.h"
 
- int main() {
-     int choix;
-     printf("1. Supprimer une quote\n2. Ajouter une quote\n3. Afficher toutes les quotes");
-     scanf("%d", &choix);
-     if (choix == 1) {
+int main() {
+    QuotesList list;
+    init_quotes(&list);
+    load_quotes_from_file(&list, "quotes.txt");
 
-     }
-     else if (choix == 2) {
+    int choice;
+    char buffer[256];
 
-     }
-     else if (choix == 3) {
+    do {
+        printf("\n MENU \n");
+        printf("1. Afficher les citations\n");
+        printf("2. Ajouter une citation\n");
+        printf("3. Supprimer une citation\n");
+        printf("4. Quitter\n");
+        printf("Choix : ");
+        scanf("%d", &choice);
+        getchar(); // mange le \n
 
-     }
-     char * quotes[MAX_QUOTES] = {
-         "Programmer - An organism that turns caffeine into code",
-         "Why do programmers prefer dark mode? Because light attracts bugs.",
-         "If debugging is the process of removing software bugs, then programming must be the process of putting them in.",
-         "I don't always test my code, but when I do, I do it in production.",
-         "Why do programmers always mix up Christmas and Halloween? Because Oct 31 == Dec 25!",
-         "Why did the programmer quit his job? Because he didn't get arrays.",
-         "Why do programmers prefer iOS development? Because the Swift.",
-         "Why do programmers prefer dogs over cats? Because dogs have fetch and cats have catch.",
-         "Why do programmers hate nature? It has too many bugs.",
-         "There are only 10 types of people in the world: Those who understand binary and those who don't."
-     };
+        switch(choice) {
+            case 1:
+                display_quotes(&list);
+            break;
+            case 2:
+                printf("Nouvelle citation : ");
+            fgets(buffer, sizeof(buffer), stdin);
+            buffer[strcspn(buffer, "\n")] = 0; // enlever \n
+            add_quote(&list, buffer);
+            break;
+            case 3:
+                display_quotes(&list);
+            printf("Indice à supprimer : ");
+            int index;
+            scanf("%d", &index);
+            getchar();
+            remove_quote(&list, index);
+            break;
+            case 4:
+                printf("Au revoir !\n");
+            break;
+            default:
+                printf("Choix invalide.\n");
+        }
+    } while (choice != 4);
 
-     srand(time(NULL));
-     print_random_quote(quotes);
-     return 0;
- }
+    free_quotes(&list);
+    return 0;
+}
